@@ -1,4 +1,44 @@
-name: CI.yaml
+name: CI
+
 on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
 
 jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      BOOKING_DB_USERNAME: testuser
+      BOOKING_DB_PASSWORD: testpassword
+      BOOKING_DB_ROOT_PASSWORD: testrootpassword
+      TZ: Europe/Stockholm
+
+      CUSTOMER_DB_NAME: pensionat_customer_db
+      CUSTOMER_DB_USERNAME: testuser
+      CUSTOMER_DB_PASSWORD: testpassword
+      CUSTOMER_DB_ROOT_PASSWORD: testrootpassword
+
+    steps:
+      - name: Checkout booking-backend
+        uses: actions/checkout@v4
+        with:
+          path: pensionat-booking-backend
+
+      - name: Checkout customer-service
+        uses: actions/checkout@v4
+        with:
+          repository: DanielLyytikainen/pensionat-customer-service
+          path: pensionat-customer-service
+
+      - name: Prepare Docker Compose
+        run: cp pensionat-customer-service/pensionat-local-environment-template/docker-compose.yaml docker-compose.yaml
+
+      - name: Run booking tests
+        run: docker compose --profile test up --build --abort-on-container-exit --exit-code-from booking-tests booking-tests
+
+      - name: Clean up
+        if: always()
+        run: docker compose --profile test down -v
