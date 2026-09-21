@@ -53,7 +53,7 @@ Each service owns its own database. The Booking Service never reads from or writ
 - Docker
 - Docker Compose
 - GitHub Actions
-- 
+- Test
 
 ---
 
