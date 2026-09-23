@@ -12,14 +12,14 @@ jobs:
 
     env:
       BOOKING_DB_USERNAME: testuser
-      BOOKING_DB_PASSWORD: testpassword
-      BOOKING_DB_ROOT_PASSWORD: testrootpassword
+      BOOKING_DB_PASSWORD: ${{secrets.BOOKING_DB_PASSWORD}}
+      BOOKING_DB_ROOT_PASSWORD: ${{secrets.BOOKING_DB_ROOTPASSWORD}}
       TZ: Europe/Stockholm
 
       CUSTOMER_DB_NAME: pensionat_customer_db
       CUSTOMER_DB_USERNAME: testuser
-      CUSTOMER_DB_PASSWORD: testpassword
-      CUSTOMER_DB_ROOT_PASSWORD: testrootpassword
+      CUSTOMER_DB_PASSWORD: ${{secrets.CUSTOMERTEST_DB_PASSWORD}}
+      CUSTOMER_DB_ROOT_PASSWORD: ${{secrets.CUSTOMERTEST_DB_ROOTPASSWORD}}
 
     steps:
       - name: Checkout booking-backend
