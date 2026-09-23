@@ -29,7 +29,7 @@ public class BookingApiIntegrationTest {
     private String url;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         url = "http://localhost:" + port + "/api/bookings";
     }
 
@@ -38,8 +38,8 @@ public class BookingApiIntegrationTest {
         CreateBookingRequest request = new CreateBookingRequest(
                 99999L,
                 1L,
-                LocalDate.of(2026,11,1),
-                LocalDate.of(2026,11,4),false
+                LocalDate.of(2026, 11, 1),
+                LocalDate.of(2026, 11, 4), false
         );
 
         ResponseEntity<String> response =
@@ -50,15 +50,15 @@ public class BookingApiIntegrationTest {
                 );
 
 
-        assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 
     @Test
-    void shouldReturn200WhenGettingBookings(){
+    void shouldReturn200WhenGettingBookings() {
 
         ResponseEntity<String> response =
-                restTemplate.getForEntity(url,String.class);
+                restTemplate.getForEntity(url, String.class);
 
-        assertEquals(HttpStatus.OK,response.getStatusCode());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 }
